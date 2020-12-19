@@ -1,0 +1,11 @@
+{
+    "folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../04-backend-server"
+		}
+	],
+    "settings": {}
+}

@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 
 import { RegisterForm } from '../interfaces/register-form.interfaces';
 import { LoginForm } from '../interfaces/login-form.interfaces';
+import { CargarUsuario } from '../interfaces/cargar-usuarios.interfaces';
+
 import { Usuario } from '../models/usuario.model';
 
 const base_url = environment.base_url;
@@ -33,6 +35,14 @@ export class UsuarioService {
 
   get uid(): string {
     return this.usuario.uid || '';
+  }
+
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    };
   }
 
   googleInit() {
@@ -96,11 +106,8 @@ export class UsuarioService {
     data = {
       ...data,
       role: this.usuario.role
-    };
-    return this.http.put(`${base_url}/usuarios/${ this.uid }`, data, {
-      headers: {
-      'x-token': this.token
-    }});
+    }
+    return this.http.put(`${base_url}/usuarios/${ this.uid }`, data, this.headers);
   }
 
   login( formData: LoginForm ) {
@@ -125,5 +132,43 @@ export class UsuarioService {
                         localStorage.setItem('token', res.token);
                       })
                     );
+  }
+
+  cargarUsuarios(desde: number = 0) {
+    const url = `${base_url}/usuarios?desde=${desde}`;
+    return this.http.get<CargarUsuario>(url, this.headers)
+            .pipe(
+              map(res => {
+
+                const usuarios = res.usuarios.map(
+                  user => new Usuario(
+                    user.nombre,
+                    user.email,
+                    '',
+                    user.img,
+                    user.google,
+                    user.role,
+                    user.uid
+                  ));
+                return {
+                  total: res.total,
+                  usuarios
+                };
+
+              })
+            );
+  }
+
+  eliminarUsuario(usuario: Usuario) {
+
+    // /usuarios/5f42921d00fcc6057c631a2a
+    const url = `${base_url}/usuarios/${usuario.uid}`;
+    return this.http.delete(url, this.headers);
+
+    console.log('eliminando usuario');
+  }
+
+  guardarUsuario(usuario: Usuario) {
+    return this.http.put(`${base_url}/usuarios/${ usuario.uid }`, usuario, this.headers);
   }
 }
