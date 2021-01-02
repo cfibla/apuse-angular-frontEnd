@@ -106,7 +106,7 @@ export class UsuarioService {
     data = {
       ...data,
       role: this.usuario.role
-    }
+    };
     return this.http.put(`${base_url}/usuarios/${ this.uid }`, data, this.headers);
   }
 
