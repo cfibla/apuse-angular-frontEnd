@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/usuario.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -9,10 +10,20 @@ import { Usuario } from '../../models/usuario.model';
 })
 export class HeaderComponent {
 
-  public usuario:Usuario;
+  public usuario: Usuario;
 
-  constructor(private usuarioService: UsuarioService) {
+  constructor(
+    private usuarioService: UsuarioService,
+    private router: Router,
+    ) {
     this.usuario = usuarioService.usuario;
+  }
+
+  buscar(termino: string) {
+    if (termino.length === 0) {
+      return;
+    }
+    this.router.navigateByUrl(`/dashboard/buscar/${termino}`);
   }
 
 
