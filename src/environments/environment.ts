@@ -4,10 +4,14 @@
 
 export const environment = {
   production: false,
-  base_url: 'http://localhost:3000/api'
+  base_url: 'http://localhost:3000/api',
+  cloud_url: 'https://res.cloudinary.com/appescola-img/image/upload/'
 };
 
 /*
+
+v1617550969/
+
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
  *

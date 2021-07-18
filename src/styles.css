@@ -9,3 +9,14 @@
 .cursor {
     cursor: pointer;
 }
+
+#oversidebar:hover {
+    color: #ffffff;
+}
+
+.img-avatar {
+    height: 150px;
+    width: 150px;
+    border-radius: 100px;
+    margin-bottom: 40px;
+}

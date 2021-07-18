@@ -74,7 +74,6 @@ export class RegisterComponent {
     }
     registreCentre() {
       const centre = this.centres[0];
-      // console.log('El centre ES: ',this.centres[0]);
       this.centreService.crearCentre(centre)
         .subscribe((centreRebut: any) => {
           this.centreUsuari = centreRebut.centre;
@@ -82,7 +81,6 @@ export class RegisterComponent {
             this.nomDeCentre = true;
           }
         });
-
     }
     crearUsuari() {
       this.formSubmitted = true;
@@ -107,7 +105,7 @@ export class RegisterComponent {
                 hideClass: {
                   popup: 'animate__animated animate__fadeOut'
                 }
-              })
+              });
             });
       }
     }
