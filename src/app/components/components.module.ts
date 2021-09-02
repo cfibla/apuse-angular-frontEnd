@@ -4,23 +4,27 @@ import { CommonModule } from '@angular/common';
 import { ChartsModule } from 'ng2-charts';
 
 import { IncrementadorComponent } from './incrementador/incrementador.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DonutComponent } from './donut/donut.component';
+import { ModalNouAlumneComponent } from './modal-nou-alumne/modal-nou-alumne.component';
 
 
 
 @NgModule({
   declarations: [
     IncrementadorComponent,
-    DonutComponent
+    DonutComponent,
+    ModalNouAlumneComponent
   ],
   exports: [
     IncrementadorComponent,
-    DonutComponent
+    DonutComponent,
+    ModalNouAlumneComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     ChartsModule
   ]
 })

@@ -34,7 +34,11 @@ export class Usuari {
     ) {}
 
     get imatgeURL() {
-        if (this.img) {
+        if (!this.img) {
+            return `${cloud_url}v1617550969/no-imatge_nwdrzz.jpg`;
+        } else if (this.img.includes('https')) {
+            return `${cloud_url}${this.img}`;
+        } else if (this.img) {
             return `${cloud_url}${this.img}`;
         } else {
             return `${cloud_url}v1617550969/no-imatge_nwdrzz.jpg`;

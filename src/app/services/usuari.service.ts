@@ -29,8 +29,16 @@ export class UsuariService {
     return this.usuari.uid || '';
   }
 
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    };
+  }
+
   validarToken(): Observable<boolean> {
-    return this.http.get(`${base_url}/login/nou-token`, {headers: {'x-token': this.token}})
+    return this.http.get(`${base_url}/login/nou-token`, this.headers)
                       .pipe(
                         map((res: any) => {
                           const {
@@ -81,21 +89,60 @@ export class UsuariService {
                     );
   }
 
-  // Amb el login de google
-  // també cal modificar el logout
-
-  actualitzarPerfil(data: {nom: string, cognom: string, email: string, nivell: string, classe: string, role: string, centre}) {
-    data = {
-      ...data,
+  actualitzarPerfil(mestre: {nom: string, cognom: string, email: string, nivell: string, classe: string, role: string, centre}) {
+  // Extreure el ROLE pq l'usuari no se'l pugui canviar
+    mestre = {
+      ...mestre,
       role: this.usuari.role
     };
-    return this.http.put(`${base_url}/usuaris/${this.uid}`, data, {headers: {'x-token': this.token}});
+    return this.http.put(`${base_url}/usuaris/${this.uid}`, mestre, this.headers);
+  }
+
+  actualitzarUsuari(mestre: Usuari) {
+      return this.http.put(`${base_url}/usuaris/${mestre.uid}`, mestre, this.headers);
+  }
+
+  carregaUsuaris( desde: number = 0 ) {
+    const url = `${base_url}/usuaris?desde=${desde}`;
+    const usuariId = this.usuari.uid;
+    return this.http.get<{total: number, usuaris: Usuari[]}>(url, this.headers)
+              .pipe(
+                map(res => {
+                  const usuaris = res.usuaris.map(user => new Usuari(
+                    user.email,
+                    '',
+                    user.nom,
+                    user.cognom,
+                    user.mestre,
+                    user.nivell,
+                    user.classe,
+                    user.centre,
+                    user.img,
+                    user.role,
+                    user.google,
+                    user.estat,
+                    user.lastLogin,
+                    user.uid)
+                  );
+                  // Busco el meu usuari dins l'array
+                  const removeIndex = usuaris.findIndex( item => item.uid === usuariId );
+                  // Trec el meu usuari
+                  usuaris.splice( removeIndex, 1 );
+                  return {
+                    total: res.total,
+                    usuaris
+                  };
+                })
+              );
+  }
+
+  eliminarUsuari(usuari: Usuari) {
+    const url = `${base_url}/usuarisd/${usuari.uid}`;
+    return this.http.delete(url, this.headers);
   }
 
   actualitzarCentre(centreUid) {
-    // console.log('usuariSERVICE - Centre UID:', centreUid);
-    // console.log(`${base_url}/canvi-centre/${this.uid}`);
-    return this.http.put(`${base_url}/canvi-centre/${this.uid}`, centreUid, {headers: {'x-token': this.token}});
+    return this.http.put(`${base_url}/canvi-centre/${this.uid}`, centreUid, this.headers);
   }
 
   login(formData: LoginForm) {
@@ -107,8 +154,12 @@ export class UsuariService {
                     );
   }
 
+  // Amb el login de google
+  // també cal modificar el logout
+
   logout() {
     localStorage.removeItem('token');
     this.router.navigateByUrl('/login');
   }
+
 }

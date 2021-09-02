@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { Centre } from 'src/app/models/centre.model';
 import { CentreService } from '../../services/centre.service';
 import { UsuariService } from '../../services/usuari.service';
 import { Router } from '@angular/router';
+// import { Centre } from 'src/app/models/centre.model';
 
 @Component({
   selector: 'app-register',
@@ -47,41 +47,6 @@ export class RegisterComponent {
     private router: Router
     ) { }
 
-
-    cercaCentre(codi: string) {
-      this.centreService.cercaGlobalCentres(codi)
-      .subscribe(
-        {
-            next: (centres: any) => {
-            this.centreTrobat = false;
-            this.centres = centres;
-            if (this.centres.length > 0) {
-              this.centreTrobat = true;
-            }
-          }
-        }
-      );
-    }
-    cercaCentreDB(centre) {
-      this.centreService.cercaParticularCentres(centre)
-      .subscribe((centres: any) => {
-        this.centres = centres;
-        if (this.centres.length > 0) {
-          this.centreTrobat = true;
-        }
-        console.log(this.centres);
-      });
-    }
-    registreCentre() {
-      const centre = this.centres[0];
-      this.centreService.crearCentre(centre)
-        .subscribe((centreRebut: any) => {
-          this.centreUsuari = centreRebut.centre;
-          if (this.centres.length > 0) {
-            this.nomDeCentre = true;
-          }
-        });
-    }
     crearUsuari() {
       this.formSubmitted = true;
 
@@ -91,6 +56,8 @@ export class RegisterComponent {
         this.registerForm.value.centre = this.centreUsuari.uid;
         this.usuariService.crearUsuari(this.registerForm.value)
             .subscribe(res => {
+
+              console.log(this.registerForm.value);
 
               this.router.navigateByUrl('/');
 
@@ -145,6 +112,43 @@ export class RegisterComponent {
           pass2Control.setErrors( { noEsIgual: true } );
         }
       };
+    }
+
+    cercaCentre(codi: string) {
+      this.centreService.cercaGlobalCentres(codi)
+      .subscribe(
+        {
+            next: (centres: any) => {
+            this.centreTrobat = false;
+            this.centres = centres;
+            if (this.centres.length > 0) {
+              this.centreTrobat = true;
+            }
+          }
+        }
+      );
+    }
+
+    cercaCentreDB(centre) {
+      this.centreService.cercaParticularCentres(centre)
+      .subscribe((centres: any) => {
+        this.centres = centres;
+        if (this.centres.length > 0) {
+          this.centreTrobat = true;
+        }
+        console.log(this.centres);
+      });
+    }
+
+    registreCentre() {
+      const centre = this.centres[0];
+      this.centreService.crearCentre(centre)
+        .subscribe((centreRebut: any) => {
+          this.centreUsuari = centreRebut.centre;
+          if (this.centres.length > 0) {
+            this.nomDeCentre = true;
+          }
+        });
     }
 
   }

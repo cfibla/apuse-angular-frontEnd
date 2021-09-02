@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { ComponentsModule } from '../components/components.module';
+import { PipesModule } from '../pipes/pipes.module';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProgressComponent } from './progress/progress.component';
@@ -15,6 +16,11 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { MestresComponent } from './administrador/mestres/mestres.component';
+import { AlumnesComponent } from './administrador/alumnes/alumnes.component';
+import { MestresSuperComponent } from './super/mestres/mestres.component';
+import { AlumnesSuperComponent } from './super/alumnes/alumnes.component';
+import { CentresSuperComponent } from './super/centres/centres.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +31,12 @@ import { PerfilComponent } from './perfil/perfil.component';
     AccountSettingsComponent,
     PromesasComponent,
     RxjsComponent,
-    PerfilComponent
+    PerfilComponent,
+    MestresComponent,
+    AlumnesComponent,
+    MestresSuperComponent,
+    AlumnesSuperComponent,
+    CentresSuperComponent
   ],
   exports: [
     DashboardComponent,
@@ -40,7 +51,8 @@ import { PerfilComponent } from './perfil/perfil.component';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    ComponentsModule
+    ComponentsModule,
+    PipesModule
   ]
 })
 export class PagesModule { }

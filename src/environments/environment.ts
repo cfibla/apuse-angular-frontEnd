@@ -10,6 +10,8 @@ export const environment = {
 
 /*
 
+CLOUDINARY_URL=cloudinary://214177955299594:JqzqnO_35f7f03sqiyV2mohz3mE@appescola-img
+
 v1617550969/
 
  * For easier debugging in development mode, you can import the following file

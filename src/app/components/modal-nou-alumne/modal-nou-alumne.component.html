@@ -1,0 +1,94 @@
+<div id="add-contact" class="modal fade in show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;" [class.amagar]="alumneService.amagarModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="tancarModal()">×</button>
+                <h4 class="modal-title" id="myModalLabel">Afegir alumnes</h4>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="dadesAlumnes" class="form-horizontal form-material" autocomplete="off">
+                    <div class="form-group row">
+                        <!-- FOTO -->
+                        <div class="col-12 text-center m-b-20">
+                            <img *ngIf="!imgTemp" [src]="imatgeURL" class="img-avatar">
+                            <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
+                            <!-- <div class="col text-center"><img src="../assets/images/users/1.jpg" alt="user" width=100% class="img-avatar"></div> -->
+                            <div class="fileupload btn btn-secondary btn-rounded waves-effect waves-light col"><span><i class="fa fa-plus"> </i> Canviar imatge</span>
+                                <input type="file" class="upload" (change)="canviarImatge($event.target.files[0])"> </div>
+                        </div>
+                        <!-- END FOTO -->
+                        <div class="col-4 m-b-20">
+                            <input type="text" class="form-control" formControlName="nom" placeholder="Nom *" [class.is-invalid]="validacioNom">
+                            <small *ngIf="validacioNom" class="text-danger">Camp obligatori</small>
+                        </div>
+                        <div class="col-4 m-b-20">
+                            <input type="text" class="form-control" formControlName="cognom1" placeholder="Primer cognom *" [class.is-invalid]="validacioCognom">
+                            <small *ngIf="validacioCognom" class="text-danger">Camp obligatori</small>
+                        </div>
+                        <div class="col-4 m-b-20">
+                            <input type="text" class="form-control" formControlName="cognom2" placeholder="Segon cognom"> </div>
+                        <div class="col-4 m-b-20 input-group">
+                            <input id="data-naixement" class="form-control datepicker" formControlName="dataNaixement" type="text" placeholder="Data de naixement" #datanaix (blur)="datepicker(datanaix.value)">
+                            <span class="input-group-addon"><i class="icon-calender"></i></span>
+                        </div>
+                        <div class="col-4 m-b-20">
+                            <input type="text" class="form-control" formControlName="seguretatSoc" placeholder="DNI/TISE"> </div>
+                        <div class="col-4 m-b-20">
+                            <input type="text" class="form-control" formControlName="adresa" placeholder="Adreça"> </div>
+                        <div class="col-4 m-b-20">
+                            <input type="text" class="form-control" formControlName="telefon1" placeholder="Telèfon 1"> </div>
+                        <div class="col-4 m-b-20">
+                            <input type="text" class="form-control" formControlName="telefon2" placeholder="Telèfon 2"> </div>
+                        <div class="col-4 m-b-20">
+                            <input type="text" class="form-control" formControlName="email" placeholder="Email" [class.is-invalid]="validacioEmail">
+                            <small *ngIf="validacioEmail" class="text-danger">Format incorrecte</small>
+                        </div>
+                        <div class="col-3 m-b-20">
+                            <label class="col-form-label">Nivell *</label>
+                            <select class="form-control" formControlName="nivell">
+                                <option value="1r">1r</option>
+                                <option value="2n">2n</option>
+                                <option value="3r">3r</option>
+                                <option value="4t">4t</option>
+                                <option value="5è">5è</option>
+                                <option value="6è">6è</option>
+                            </select>
+                        </div>
+                        <div class="col-3 m-b-20">
+                            <label class="col-form-label">Grup *</label>
+                            <select class="form-control" formControlName="classe">
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                            </select>
+                        </div>
+                        <div class="col-3 m-b-20">
+                            <label class="col-form-label">Repetidor</label>
+                            <select class="form-control" formControlName="repetidor" #repe (change)="canviRepetidor(repe.value)">
+                                <option value=false>No</option>
+                                <option value=true>Si</option>
+                            </select>
+                        </div>
+                        <div class="col-3 m-b-20">
+                            <label class="col-form-label">Curs repetit</label>
+                            <select class="form-control" formControlName="cursRepetit">
+                                <option value="1r">1r</option>
+                                <option value="2n">2n</option>
+                                <option value="3r">3r</option>
+                                <option value="4t">4t</option>
+                                <option value="5è">5è</option>
+                                <option value="6è">6è</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal" (click)="tancarModal()">Cancel·la</button>
+                <button type="button" class="btn btn-info waves-effect" data-dismiss="modal" (click)="creaAlumne()" [disabled]="!dadesAlumnes.valid">Desa</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

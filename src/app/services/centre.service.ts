@@ -19,6 +19,18 @@ export class CentreService {
     private http: HttpClient
   ) { }
 
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
+
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    };
+  }
+
   cercaGlobalCentres(codi: string) {
     const anyo = (new Date()).getFullYear() - 2;
     const url = `https://analisi.transparenciacatalunya.cat/resource/e2ef-eiqj.json?codi_centre=${ codi }&any=${ anyo }`;
@@ -33,10 +45,20 @@ export class CentreService {
   cercaParticularCentres(centre: any) {
     const url = `${base_url}/centres/`;
 
-    return this.http.get(url);
+    return this.http.get(url, this.headers);
       // .pipe(
       //   map( (resp: Centre[]) => resp)
       //   );
+
+  }
+
+  getCentres() {
+    const url = `${base_url}/centres/`;
+
+    return this.http.get(url, this.headers)
+      .pipe(
+        map( (res: {ok: boolean, centres: Centre[]}) => res.centres)
+        );
 
   }
 
@@ -60,4 +82,8 @@ export class CentreService {
 
     return this.http.post(url, {...centreCreat});
   }
+
+  actualitzarCentre(centre: Centre) {
+    return this.http.put(`${base_url}/centres/${centre.uid}`, centre, this.headers);
+}
 }

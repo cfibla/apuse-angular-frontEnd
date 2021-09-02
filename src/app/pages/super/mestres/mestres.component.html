@@ -1,0 +1,82 @@
+<div class="row animated fadeIn slow">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <input type="text" class="form-control" placeholder="Cerca mestre..." #txtCerca (keyup)="cercar(txtCerca.value)" />
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn slow" *ngIf="carregant">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Carregant la pàgina</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Un moment, si us plau</p>
+        </div>
+    </div>
+</div>
+<div class="row animated fadeIn slow" *ngIf="!carregant">
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Mestres</h4>
+                <h6 class="card-subtitle">Total de mestres: {{totalMestres}}</h6>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">Nom</th>
+                                <th class="text-center w100">Especialitat</th>
+                                <th class="text-center w100">Curs</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center w140">Rol</th>
+                                <th class="text-center text-nowrap w100">Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let mestre of mestres">
+                                <td class="text-center">
+                                    <img [src]="mestre.imatgeURL" class="avatar-petit" alt="Imatge d'usuari">
+                                </td>
+                                <td class="text-center">{{mestre.nom}} {{mestre.cognom}}</td>
+                                <td class="text-center">
+                                    <span *ngIf="mestre.mestre === 'PRI'" class="label label-info">{{mestre.mestre}}</span>
+                                    <span *ngIf="mestre.mestre === 'EE'" class="label label-warning">{{mestre.mestre}}</span>
+                                    <!-- <span class="label label-success">{{mestre.mestre}}</span>
+                                    <span class="label label-danger">{{mestre.mestre}}</span> -->
+
+                                </td>
+                                <td class="text-center">{{mestre.nivell}} {{mestre.classe}}</td>
+                                <td class="text-center">{{mestre.email}}</td>
+                                <td>
+                                    <select class="form-control" [(ngModel)]="mestre.role" (change)="canviarRole(mestre)">
+                                        <option value="USER_ROLE">Usuari</option>
+                                        <option value="ADMIN_ROLE">Admin</option>
+                                    </select>
+                                </td>
+
+                                <td class="text-nowrap text-center">
+                                    <!-- <a href="#" data-toggle="tooltip" data-original-title="Editar"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a> -->
+                                    <a data-toggle="tooltip" data-original-title="Eliminar" class="cursor" (click)="eliminarMestre(mestre)">
+                                        <i class="fa fa-close text-danger"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-right" *ngIf="txtCerca.value.length === 0">
+                    <button (click)="cambiarPagina(-10)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> Anterior</button> &nbsp;
+                    <button (click)="cambiarPagina(10)" class="btn btn-secondary">Següent <i class="fa fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

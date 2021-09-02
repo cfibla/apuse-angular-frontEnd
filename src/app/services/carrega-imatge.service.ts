@@ -29,8 +29,8 @@ export class CarregaImatgeService {
       });
 
       const data = await res.json();
-      console.log('DATA: ', data);
-
+      // console.log('DATA: ', data);
+      // console.log('service actualtza IMG');
       if (data.ok) {
         return data.dataImatge.public_id;
       } else {

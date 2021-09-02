@@ -3,17 +3,31 @@
 
 <head>
     <meta charset="utf-8">
-    <title>AdminPro</title>
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon.png">
+    <title>AppEscola</title>
     <!-- Bootstrap Core CSS -->
     <link href="./assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Footable Core CSS -->
+    <link href="./assets/plugins/footable/css/footable.core.css" rel="stylesheet">
+    <link href="./assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+    <!-- <link href="./assets/plugins/footable/css/footable.bootstrap.min.css" rel="stylesheet"> -->
+    <link href="./assets/css/pages/footable-page.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="./assets/css/style.css" rel="stylesheet">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- page css -->
+    <link href="./assets/css/pages/footable-page.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="./assets/css/colors/default-dark.css" id="theme" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link id="theme" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- DatePicker -->
+    <link href="./assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom CSS -->
+    <link href="./assets/css/style.css" rel="stylesheet">
 </head>
 
 <body class="fix-header card-no-border fix-sidebar">
@@ -30,6 +44,7 @@
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
+
     <app-root></app-root>
 
     <!-- ============================================================== -->
@@ -39,6 +54,7 @@
     <!-- Bootstrap tether Core JavaScript -->
     <script src="./assets/plugins/bootstrap/js/popper.min.js"></script>
     <script src="./assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="./assets/js/perfect-scrollbar.jquery.min.js"></script>
     <!--Wave Effects -->
@@ -48,6 +64,15 @@
     <!--stickey kit -->
     <script src="./assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
     <script src="./assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!-- Footable -->
+    <script src="./assets/plugins/footable/js/footable.all.min.js"></script>
+    <script src="./assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="./assets/js/footable-init.js"></script>
+    <script src="./assets/plugins/footable/src/js/FooTable.js"></script>
+    <!-- DatePicker -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/ca.min.js" integrity="sha512-Jj2Leg+TB+LRdCEuGXUD2/sOcZcQqVH1zQ+nk1qGBoojAphBaH90oWeYfiB1xIr3va4AIRnDGQiPopGSv6ATiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <!--Custom JavaScript -->
     <script src="./assets/js/custom.js"></script>
     <!-- ============================================================== -->
@@ -58,6 +83,31 @@
     <!-- ===================== ChartJs ================================ -->
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script>
+        $(document).ready(function() {
+            // Idioma Datepicker
+            $.fn.datepicker.dates['cat'] = {
+                days: ["Diumenge", "Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres", "Dissabte"],
+                daysShort: ["Diu", "Dil", "Dim", "Dix", "Dij", "Div", "Dis"],
+                daysMin: ["Dg", "Dl", "Dm", "Dx", "Dj", "Dv", "Ds"],
+                months: ["Gener", "Febrer", "Març", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Desembre"],
+                monthsShort: ["Gen.", "Febr.", "Març", "Abr.", "Maig", "Juny", "Jul.", "Ag.", "Set.", "Oct.", "Nov.", "Des."],
+                today: "Avui",
+                clear: "Neteja",
+                format: "dd/mm/yyyy",
+                titleFormat: "MM yyyy",
+                /* Leverages same syntax as 'format' */
+                weekStart: 1
+            };
+
+            // Datepicker
+            $(function() {
+                $('#data-naixement').datepicker({
+                    language: 'cat'
+                });
+            });
+        });
+    </script>
 
 </body>
 

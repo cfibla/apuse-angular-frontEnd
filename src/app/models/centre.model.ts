@@ -4,6 +4,7 @@
 export class Centre {
 
     constructor(
+        public uid: string,
         public codi: string,
         public nom: string,
         public email: string,
@@ -14,6 +15,7 @@ export class Centre {
         public codiPostal?: string ,
         public titularitat?: string ,
         public client?: string,
-        public password?: string
+        public password?: string,
+        public img?: string
     ) {}
 }
