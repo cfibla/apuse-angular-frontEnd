@@ -16,7 +16,7 @@ const base_url = environment.base_url;
 })
 export class AlumneService {
 
-  private _amagarModal = true;
+  // private _amagarModal = true;
   public usuari: Usuari;
   public alumne: Alumne;
 
@@ -27,9 +27,9 @@ export class AlumneService {
               ) { }
 
 
-  get amagarModal() {
-    return this._amagarModal;
-  }
+  // get amagarModal() {
+  //   return this._amagarModal;
+  // }
 
   get token(): string {
     return localStorage.getItem('token') || '';
@@ -48,10 +48,19 @@ export class AlumneService {
   }
 
   obrirModal() {
-    this._amagarModal = false;
+    // this._amagarModal = false;
+    console.log('obrir modal');
   }
+
+  obrirDadesModal(id) {
+    // this._amagarModal = false;
+    console.log('obrir Dades modal');
+    return this.http.get(`${base_url}/alumnes/${id}`, this.headers);
+  }
+
   tancarModal() {
-    this._amagarModal = true;
+    // this._amagarModal = true;
+    console.log('tancar modal');
   }
 
   crearAlumne(formData: AlumneDadesForm) {

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AlumneService } from '../../../services/alumne.service';
-import { Alumne } from '../../../models/alumne.model';
 import { delay } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+
+import { AlumneService } from '../../../services/alumne.service';
+import { Alumne } from '../../../models/alumne.model';
 import { CerquesService } from '../../../services/cerques.service';
 
 @Component({
@@ -15,7 +16,6 @@ export class AlumnesSuperComponent implements OnInit {
 
   public alumnes: Alumne[] = [];
   public alumnesTemp: Alumne[] = [];
-  // public alumne: Alumne;
 
   public carregant = true;
   public desde = 0;
@@ -76,6 +76,14 @@ export class AlumnesSuperComponent implements OnInit {
 
   obrirModal() {
     this.alumneService.obrirModal();
+  }
+
+  obrirDadesModal(id) {
+    console.log(id);
+    this.alumneService.obrirDadesModal(id)
+    .subscribe(res => {
+      console.log(res);
+    });
   }
 
   cercar(paraula: string) {

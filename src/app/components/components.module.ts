@@ -7,6 +7,9 @@ import { IncrementadorComponent } from './incrementador/incrementador.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DonutComponent } from './donut/donut.component';
 import { ModalNouAlumneComponent } from './modal-nou-alumne/modal-nou-alumne.component';
+import { ModalDadesAlumneComponent } from './modal-dades-alumne/modal-dades-alumne.component';
+import { ModalEeAlumneComponent } from './modal-ee-alumne/modal-ee-alumne.component';
+import { ModalTutoriesAlumneComponent } from './modal-tutories-alumne/modal-tutories-alumne.component';
 
 
 
@@ -14,18 +17,25 @@ import { ModalNouAlumneComponent } from './modal-nou-alumne/modal-nou-alumne.com
   declarations: [
     IncrementadorComponent,
     DonutComponent,
-    ModalNouAlumneComponent
+    ModalNouAlumneComponent,
+    ModalDadesAlumneComponent,
+    ModalEeAlumneComponent,
+    ModalTutoriesAlumneComponent
   ],
   exports: [
     IncrementadorComponent,
     DonutComponent,
-    ModalNouAlumneComponent
+    ModalNouAlumneComponent,
+    ModalDadesAlumneComponent,
+    ModalEeAlumneComponent,
+    ModalTutoriesAlumneComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     ChartsModule
-  ]
+  ],
+  // bootstrap: [ModalNouAlumneComponent]
 })
 export class ComponentsModule { }

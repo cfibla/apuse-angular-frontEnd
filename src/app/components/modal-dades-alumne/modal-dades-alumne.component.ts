@@ -14,16 +14,17 @@ import { Alumne } from '../../models/alumne.model';
 const cloud_url = environment.cloud_url;
 
 @Component({
-  selector: 'app-modal-nou-alumne',
-  templateUrl: './modal-nou-alumne.component.html',
+  selector: 'app-modal-dades-alumne',
+  templateUrl: './modal-dades-alumne.component.html',
   styles: []
 })
-export class ModalNouAlumneComponent implements OnInit {
+export class ModalDadesAlumneComponent implements OnInit {
 
-  dadesAlumnes: FormGroup;
+  dadesAlumne: FormGroup;
   closeModal: string;
 
   public usuari: Usuari;
+
   public nouAlumne: Alumne[] = [];
   
   public validacio = false;
@@ -40,13 +41,13 @@ export class ModalNouAlumneComponent implements OnInit {
               private fb: FormBuilder,
               private usuariService: UsuariService,
               private carregaImatgeService: CarregaImatgeService,
-              private modalService: NgbModal
+              private modalService: NgbModal,
               ) {
                 this.usuari = this.usuariService.usuari;
                 this.classe = this.usuari.classe;
                 this.nivell = this.usuari.nivell;
                 this.creaFormulari();
-                this.dadesAlumnes.get('cursRepetit').disable();
+                this.dadesAlumne.get('cursRepetit').disable();
                }
 
   ngOnInit(): void {
@@ -54,24 +55,45 @@ export class ModalNouAlumneComponent implements OnInit {
   }
 
   get imatgeURL() {
-    if (!this.dadesAlumnes.value.img) {
+    if (!this.dadesAlumne.value.img) {
         return `${cloud_url}v1617550969/no-imatge_nwdrzz.jpg`;
     } else {
-        return this.dadesAlumnes.value.img;
+        return this.dadesAlumne.value.img;
     }
 }
   get validacioNom () {
-    return this.dadesAlumnes.get('nom').invalid && this.dadesAlumnes.get('nom').touched
+    return this.dadesAlumne.get('nom').invalid && this.dadesAlumne.get('nom').touched
   }
   get validacioCognom () {
-    return this.dadesAlumnes.get('cognom1').invalid && this.dadesAlumnes.get('cognom1').touched
+    return this.dadesAlumne.get('cognom1').invalid && this.dadesAlumne.get('cognom1').touched
   }
   get validacioEmail () {
-    return this.dadesAlumnes.get('email').invalid
+    return this.dadesAlumne.get('email').invalid
+  }
+
+  obrirModalDades(content) {
+    console.log('Hola');
+    this.modalService.open(content, {ariaLabelledBy: 'modal-dades-alumne'}).result.then((res) => {
+      this.closeModal = `Closed with: ${res}`;
+      console.log(this.closeModal);
+    }, (res) => {
+      this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
+      console.log(this.closeModal);
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
   }
 
   creaFormulari() {
-    this.dadesAlumnes = this.fb.group({
+    this.dadesAlumne = this.fb.group({
       nom: new FormControl('', [Validators.required, Validators.minLength(2)]),
       cognom1: new FormControl('', [Validators.required, Validators.minLength(2)]),
       cognom2: new FormControl(''),
@@ -91,25 +113,53 @@ export class ModalNouAlumneComponent implements OnInit {
     });
   }
 
+  creaAlumne() {
+    if (this.dadesAlumne.invalid) {
+      return;
+    } else {
+      this.imgTemp = null;
+      this.dadesAlumne.value.dataNaixement = this.dataNa;
+      this.dadesAlumne.value.img = this.imatge;
+      this.alumneService.crearAlumne(this.dadesAlumne.value)
+      .subscribe(res => { 
+            // console.log('RESPUESTA SERVICE', res);
+            this.pujarImatge(res);
+            this.creaFormulari();
+          }, (err) => {
+            Swal.fire({
+              title: 'Error',
+              text: err.error.msg,
+              icon: 'error',
+              showClass: {
+                popup: 'animate__animated animate__fadeIn'
+              },
+              hideClass: {
+                popup: 'animate__animated animate__fadeOut'
+              }
+            });
+          });
+        }
+        
+  }
+
   datepicker(data) {
     console.log('DATEPICKER', data);
     this.dataNa = data;
-    console.log('DATEPICKER 2', this.dadesAlumnes);
+    console.log('DATEPICKER 2', this.dadesAlumne);
   }
 
   canviRepetidor(data) {
     this.repetidor = data;
     if (data=='false') {
-      this.dadesAlumnes.get('cursRepetit').disable();
+      this.dadesAlumne.get('cursRepetit').disable();
     }
     if (data=='true') {
-      this.dadesAlumnes.get('cursRepetit').enable();
+      this.dadesAlumne.get('cursRepetit').enable();
     }
   }
 
   canviarImatge(file: File) {
     this.imatgePerPujar = file;
-    console.log('ARXIU ESCOLLIT: ', file);
     if (!file) {
       return this.imgTemp = null;
     }
@@ -122,72 +172,21 @@ export class ModalNouAlumneComponent implements OnInit {
     };
   }
 
-  async pujarAlumne() {
-    if (this.dadesAlumnes.invalid) {
-      return;
-    } else {
-      const dades = this.dadesAlumnes.value;
-      await this.carregaImatgeService
-            .actualitzaImatge(this.imatgePerPujar, 'alumnes', dades._id)
-            .then(img => {
-              // console.log('IMATGE PUJADA:',img);
-              this.imatge = img;
-              this.creaAlumne();
-              
-            }).catch(err => {
-              Swal.fire('Error', "No s'ha pogut actualitzar la imatge", 'success');
-            });
-      await this.alumneService.nouAlumne.emit(this.imatge);
-    }
-  }
-
-  creaAlumne() {
-    this.imgTemp = null;
-    this.dadesAlumnes.value.dataNaixement = this.dataNa;
-    this.dadesAlumnes.value.img = this.imatge;
-
-    this.alumneService.crearAlumne(this.dadesAlumnes.value)
-    .subscribe(res => { 
-          this.creaFormulari();
-        }, (err) => {
-          Swal.fire({
-            title: 'Error',
-            text: err.error.msg,
-            icon: 'error',
-            showClass: {
-              popup: 'animate__animated animate__fadeIn'
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOut'
-            }
-          });
-        });   
+  pujarImatge(dades) {
+    this.carregaImatgeService
+        .actualitzaImatge(this.imatgePerPujar, 'alumnes', dades.alumne._id)
+        .then(img => {
+          console.log(img);
+          this.imatge = img;
+          this.alumneService.nouAlumne.emit(this.imatge);
+        }).catch(err => {
+          Swal.fire('Error', "No s'ha pogut actualitzar la imatge", 'success');
+        });
   }
 
   tancarModal() {
     this.alumneService.tancarModal();
   }
 
-  obrirModalNouAlumne(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((res) => {
-      this.pujarAlumne()
-      // this.creaAlumne();
-      // this.closeModal = `Closed with: ${res}`;
-      // console.log(this.closeModal);
-    }, (res) => {
-      this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
-      console.log(this.closeModal);
-    });
-  }
-  
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdroooop';
-    } else {
-      return  `with: ${reason}`;
-    }
-  }
 
 }

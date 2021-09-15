@@ -22,8 +22,15 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Alumnes</h4>
-                <h6 class="card-subtitle">Total d'alumnes: {{alumnes.length}}</h6>
+                <div class="row">
+                    <div class="col-4">
+                        <h4 class="card-title">Alumnes</h4>
+                        <h6 class="card-subtitle">Total d'alumnes: {{alumnes.length}}</h6>
+                    </div>
+                    <div class="col-8 text-right">
+                        <app-modal-nou-alumne></app-modal-nou-alumne>
+                    </div>
+                </div>
 
                 <table class="table-bordered table m-b-0 toggle-arrow-tiny footable-loaded footable tablet breakpoint">
                     <thead>
@@ -48,11 +55,16 @@
                             <td class="text-center taulaAlign">{{alumne.nom}} {{alumne.cognom1}} {{alumne.cognom2}}</td>
                             <td class="text-center taulaAlign">{{alumne.nivell}} {{alumne.classe}}</td>
                             <td class="text-center taulaAlign">{{alumne.centre.nom}}</td>
-                            <td class="text-center taulaAlign"><a class="linksAlumne"><i class="fa fa-plus-circle text-success"></i></a></td>
-                            <td class="text-center taulaAlign"><a class="linksAlumne"><i class="fa fa-plus-circle text-success"></i></a></td>
-                            <td class="text-center taulaAlign"><a class="linksAlumne"><i class="fa fa-plus-circle text-success"></i></a></td>
+                            <td class="text-center taulaAlign">
+                                <app-modal-dades-alumne></app-modal-dades-alumne>
+                            </td>
+                            <td class="text-center taulaAlign">
+                                <app-modal-ee-alumne></app-modal-ee-alumne>
+                            </td>
+                            <td class="text-center taulaAlign">
+                                <app-modal-tutories-alumne></app-modal-tutories-alumne>
+                            </td>
                             <td class="text-nowrap text-center taulaAlign">
-                                <!-- <a href="#" data-toggle="tooltip" data-original-title="Editar"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a> -->
                                 <a (click)="esborrarAlumne(alumne)" data-toggle="tooltip" data-original-title="Eliminar" class="cursor linksAlumne">
                                     <i class="fa fa-close text-danger"></i>
                                 </a>
@@ -61,10 +73,10 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="2">
-                                <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-contact" (click)="obrirModal()"><i class="fa fa-plus"> </i> Afegir alumnes</button>
-                            </td>
-                            <td colspan="7">
+                            <!-- <td colspan="2">
+                                <button type="button" class="btn btn-info btn-rounded"><i class="fa fa-plus"> </i> Afegir alumnes</button>
+                            </td> -->
+                            <td colspan="9">
                                 <div class="text-right">
                                     <ul class="pagination">
                                         <li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li>
@@ -79,7 +91,6 @@
                         </tr>
                     </tfoot>
                 </table>
-
             </div>
         </div>
     </div>
