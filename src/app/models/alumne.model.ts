@@ -60,49 +60,49 @@ export class Alumne {
         public telefon1?: string,
         public telefon2?: string,
         public estat?: boolean,
-        public atencioDiversitat?: boolean,
+        public atencioDiversitat?: boolean, //
         public atencioDiversitatSeguiment?: boolean,
-        public aill?: boolean,
-        public beca?: boolean,
+        public aill?: boolean, //
+        public beca?: boolean, //
         public serveisSocials?: boolean,
     // Tipus de PI
-        public piCurricular?: boolean,
-        public piMetodologic?: boolean,
-        public piConductual?: boolean,
+        public piCurricular?: boolean, //
+        public piMetodologic?: boolean, //
+        public piConductual?: boolean, //
     // Assignatures amb PI
-        public piCatala?: boolean,
-        public piMates?: boolean,
-        public piCastellano?: boolean,
-        public piMedi?: boolean,
-        public piEducacioFisica?: boolean,
-        public piEducacioArtistica?: boolean,
+        public piCatala?: boolean, //
+        public piMates?: boolean, //
+        public piCastellano?: boolean, //
+        public piMedi?: boolean, //
+        public piEducacioFisica?: boolean, //
+        public piEducacioArtistica?: boolean, //
         public materialDiferenciat?: boolean,
-        public adequacioContingutsMates?: boolean,
-        public adequacioContingutsCatala?: boolean,
-        public adequacioContingutsCastella?: boolean,
-        public adequacioContingutsMedi?: boolean,
-        public fullDerivacio?: boolean,
-        public fullDerivacioAutor?: string,
-        public fullDerivacioMotiu?: string,
+        public adequacioContingutsMates?: boolean, //
+        public adequacioContingutsCatala?: boolean, //
+        public adequacioContingutsCastella?: boolean, //
+        public adequacioContingutsMedi?: boolean, //
+        public fullDerivacio?: boolean, //
+        public fullDerivacioAutor?: string, //
+        public fullDerivacioMotiu?: string, //
         public certificatDisminucio?: boolean,
         public percetatgeDisminucio?: string,
-        public valoracioEap?: boolean,
-        public valoracioEapAny?: string,
-        public dictamen?: boolean,
-        public motiuDictamen?: string,
+        public valoracioEap?: boolean, //
+        public valoracioEapAny?: string, //
+        public dictamen?: boolean, //
+        public motiuDictamen?: string, //
     // Seguiment Serveis Externs
-        public seguimentEap?: boolean,
-        public seguimentTsEap?: boolean,
-        public seguimentCredag?: boolean,
-        public seguimentCredv?: boolean,
-        public seguimentCsmij?: boolean,
+        public seguimentEap?: boolean, //
+        public seguimentTsEap?: boolean, //
+        public seguimentCredag?: boolean, //
+        public seguimentCredv?: boolean, //
+        public seguimentCsmij?: boolean, //
         public seguimentSeetdic?: boolean,
         public seguimentCdiap?: boolean,
     // Seguiment mèdic
-        public seguimentPediatria?: boolean,
-        public seguimentNeuropediatria?: boolean,
-        public seguimentAltresEspecialitats?: string,
-        public AtencióServeisPrivats?: string,
+        public seguimentPediatria?: boolean, //
+        public seguimentNeuropediatria?: boolean, //
+        public seguimentAltresEspecialitats?: string, // 
+        public atencioServeisPrivats?: string, //
     // SEGUIMENT
         public segActuacions?: [{ date: string, body: string }],
         public segInformacioCAD?: [{ date: string, body: string }],
@@ -134,7 +134,8 @@ export class Alumne {
             dataMen: string,
             dataIsoMen: Date
         }],
-        public uid?: string
+        public uid?: string,
+        public serveisExternsSeguiment?: boolean,
     ) {}
 
     get imatgeURL() {

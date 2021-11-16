@@ -16,7 +16,7 @@ export class CarregaImatgeService {
       const formData = new FormData();
       formData.append('imatge', arxiu);
 
-      console.log('formData', formData.append);
+      console.log('formData carrega-imatge:', formData.append);
 
       const url = `${ base_url }/uploads/${ tipus }/${ id }`;
 
@@ -46,13 +46,6 @@ export class CarregaImatgeService {
             console.log("CAP OPCIÓ ANTERIOR");
             break;
     }
-      // if (data.ok) {
-      //   return data.dataImatge.public_id;
-      // } else {
-      //   console.log('ERROR: ', data.msg);
-      //   return false;
-      // }
-
     } catch (error) {
         console.log(error);
       return false;

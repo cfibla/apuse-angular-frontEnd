@@ -59,6 +59,17 @@
     vertical-align: middle !important;
 }
 
+.bold {
+    font-weight: bold;
+}
+
+.div-diversitat {
+    border-style: solid;
+    border-color: lightgrey;
+    border-radius: 25px;
+    border-width: 2px;
+}
+
 
 /* DATEPICKER */
 

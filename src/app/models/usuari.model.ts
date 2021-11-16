@@ -25,7 +25,7 @@ export class Usuari {
         public classe: string,
         public centre: _centre,
         public img?: string,
-        public role?: string,
+        public role?: 'SUPER_ROLE' | 'ADMIN_ROLE' | 'USER_ROLE',
         public google?: boolean,
         public estat?: boolean,
         public lastLogin?: string,

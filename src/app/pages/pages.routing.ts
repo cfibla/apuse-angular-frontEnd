@@ -20,6 +20,8 @@ import { AlumnesComponent } from './administrador/alumnes/alumnes.component';
 import { MestresSuperComponent } from './super/mestres/mestres.component';
 import { CentresSuperComponent } from './super/centres/centres.component';
 import { AlumnesSuperComponent } from './super/alumnes/alumnes.component';
+import { AdminGuard } from '../guards/admin.guard';
+import { SuperGuard } from '../guards/super.guard';
 
 const routes: Routes = [
 
@@ -35,12 +37,12 @@ const routes: Routes = [
         { path: 'promesas', component: PromesasComponent, data: {titulo: 'Promesas'} },
         { path: 'perfil', component: PerfilComponent, data: {titulo: "Perfil d'usuari"} },
         // Administrador
-        { path: 'admin/mestres', component: MestresComponent, data: {titulo: 'Admin - Administració mestres'} },
-        { path: 'admin/alumnes', component: AlumnesComponent, data: {titulo: 'Admin - Administració alumnes'} },
+        { path: 'admin/mestres', canActivate: [AdminGuard], component: MestresComponent, data: {titulo: 'Admin - Administració mestres'} },
+        { path: 'admin/alumnes', canActivate: [AdminGuard], component: AlumnesComponent, data: {titulo: 'Admin - Administració alumnes'} },
         // Super
-        { path: 'super/mestres', component: MestresSuperComponent, data: {titulo: 'Super - Administració mestres'} },
-        { path: 'super/alumnes', component: AlumnesSuperComponent, data: {titulo: 'Super - Administració alumnes'} },
-        { path: 'super/centres', component: CentresSuperComponent, data: {titulo: 'Super - Administració centres'} },
+        { path: 'super/mestres', canActivate: [SuperGuard], component: MestresSuperComponent, data: {titulo: 'Super - Administració mestres'} },
+        { path: 'super/alumnes', canActivate: [SuperGuard], component: AlumnesSuperComponent, data: {titulo: 'Super - Administració alumnes'} },
+        { path: 'super/centres', canActivate: [SuperGuard], component: CentresSuperComponent, data: {titulo: 'Super - Administració centres'} },
       ]
     }
 

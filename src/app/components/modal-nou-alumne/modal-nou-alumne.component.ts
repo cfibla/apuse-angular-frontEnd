@@ -93,6 +93,7 @@ export class ModalNouAlumneComponent implements OnInit {
 
   datepicker(data) {
     console.log('DATEPICKER', data);
+    this.dadesAlumnes.value.dataNaixement = data;
     this.dataNa = data;
     console.log('DATEPICKER 2', this.dadesAlumnes);
   }
@@ -133,7 +134,6 @@ export class ModalNouAlumneComponent implements OnInit {
               // console.log('IMATGE PUJADA:',img);
               this.imatge = img;
               this.creaAlumne();
-              
             }).catch(err => {
               Swal.fire('Error', "No s'ha pogut actualitzar la imatge", 'success');
             });
@@ -141,13 +141,14 @@ export class ModalNouAlumneComponent implements OnInit {
     }
   }
 
-  creaAlumne() {
+  async creaAlumne() {
     this.imgTemp = null;
-    this.dadesAlumnes.value.dataNaixement = this.dataNa;
+    // this.dadesAlumnes.value.dataNaixement = this.dataNa;
     this.dadesAlumnes.value.img = this.imatge;
-
-    this.alumneService.crearAlumne(this.dadesAlumnes.value)
+    console.log('DadesAlumne.value: ', this.dadesAlumnes.value);
+    await this.alumneService.crearAlumne(this.dadesAlumnes.value)
     .subscribe(res => { 
+      console.log('ALUMNE CREAT', res);
           this.creaFormulari();
         }, (err) => {
           Swal.fire({
@@ -170,7 +171,7 @@ export class ModalNouAlumneComponent implements OnInit {
 
   obrirModalNouAlumne(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((res) => {
-      this.pujarAlumne()
+      this.pujarAlumne();
       // this.creaAlumne();
       // this.closeModal = `Closed with: ${res}`;
       // console.log(this.closeModal);

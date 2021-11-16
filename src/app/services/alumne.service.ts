@@ -48,12 +48,12 @@ export class AlumneService {
   }
 
   obrirModal() {
-    // this._amagarModal = false;
+   
     console.log('obrir modal');
   }
 
   obrirDadesModal(id) {
-    // this._amagarModal = false;
+    
     console.log('obrir Dades modal');
     return this.http.get(`${base_url}/alumnes/${id}`, this.headers);
   }
@@ -67,6 +67,14 @@ export class AlumneService {
     // console.log('SERVICE: ', formData);
     return this.http.post(`${base_url}/alumnes`, formData, this.headers);
   }
+
+
+  actualitzarAlumne(formData: AlumneDadesForm) { 
+    const alumneId = formData.uid;
+    // console.log('SERVICE actualizar alumne ID:', this.uid); 
+    console.log('SERVICE actualizar alumne:', formData); 
+      return this.http.put(`${base_url}/alumnes/${alumneId}`, formData, this.headers);
+    }
 
   getAlumnes( desde: number = 0 ) {
     const url = `${base_url}/alumnes?desde=${desde}`;
@@ -134,14 +142,15 @@ export class AlumneService {
                     alumne.seguimentPediatria,
                     alumne.seguimentNeuropediatria,
                     alumne.seguimentAltresEspecialitats,
-                    alumne.AtencióServeisPrivats,
+                    alumne.atencioServeisPrivats,
                     alumne.segActuacions,
                     alumne.segInformacioCAD,
                     alumne.segAltresCoord,
                     alumne.reunionsPares,
                     alumne.assist,
                     alumne.menjador,
-                    alumne.uid
+                    alumne.uid,
+                    alumne.serveisExternsSeguiment
                     )
                   );
                   console.log('ALUMNES SERVICE: ', alumnes);

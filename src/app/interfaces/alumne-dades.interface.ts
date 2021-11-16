@@ -13,4 +13,5 @@ export interface AlumneDadesForm {
       telefon1: string;
       telefon2: string;
       email: string;
+      uid: string;
 }

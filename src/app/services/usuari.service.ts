@@ -25,6 +25,10 @@ export class UsuariService {
     return localStorage.getItem('token') || '';
   }
 
+  get role(): 'SUPER_ROLE' | 'ADMIN_ROLE' | 'USER_ROLE' {
+    return this.usuari.role;
+  }
+
   get uid(): string {
     return this.usuari.uid || '';
   }
@@ -35,6 +39,13 @@ export class UsuariService {
         'x-token': this.token
       }
     };
+  }
+
+  guardarLocalStorage(token: string, menu: any) {
+    let menuJson = JSON.stringify(menu);
+    localStorage.setItem('token', token);
+    localStorage.setItem('menu', menuJson);
+    console.log(menuJson);
   }
 
   validarToken(): Observable<boolean> {
@@ -73,6 +84,7 @@ export class UsuariService {
                             uid);
 
                           localStorage.setItem('token', res.token);
+                          localStorage.setItem('menu', res.menu);
                           return true;
                         }),
                         // El "of" crea un Observable del que hi ha dins del parèntesi
@@ -84,8 +96,10 @@ export class UsuariService {
     return this.http.post(`${base_url}/usuaris`, formData)
                     .pipe(
                       tap(
-                        (res: any) => { localStorage.setItem('token', res.token); }
-                        )
+                        (res: any) => {
+                          this.guardarLocalStorage(res.token, res.menu);
+                        }
+                      )
                     );
   }
 
@@ -149,7 +163,9 @@ export class UsuariService {
     return this.http.post(`${base_url}/login`, formData)
                     .pipe(
                       tap(
-                        (res: any) => { localStorage.setItem('token', res.token); }
+                        (res: any) => {
+                          this.guardarLocalStorage(res.token, res.menu);
+                        }
                         )
                     );
   }
@@ -159,6 +175,8 @@ export class UsuariService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('menu');
+ 
     this.router.navigateByUrl('/login');
   }
 

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AlumneService } from '../../services/alumne.service';
 import { Usuari } from '../../models/usuari.model';
@@ -20,11 +20,11 @@ const cloud_url = environment.cloud_url;
 })
 export class ModalDadesAlumneComponent implements OnInit {
 
+  @Input() alumneFill;
+
   dadesAlumne: FormGroup;
-  closeModal: string;
 
   public usuari: Usuari;
-
   public nouAlumne: Alumne[] = [];
   
   public validacio = false;
@@ -38,7 +38,7 @@ export class ModalDadesAlumneComponent implements OnInit {
   public imgTemp = null;
 
   constructor(public alumneService: AlumneService,
-              private fb: FormBuilder,
+              // private fb: FormBuilder,
               private usuariService: UsuariService,
               private carregaImatgeService: CarregaImatgeService,
               private modalService: NgbModal,
@@ -46,21 +46,66 @@ export class ModalDadesAlumneComponent implements OnInit {
                 this.usuari = this.usuariService.usuari;
                 this.classe = this.usuari.classe;
                 this.nivell = this.usuari.nivell;
-                this.creaFormulari();
-                this.dadesAlumne.get('cursRepetit').disable();
                }
 
   ngOnInit(): void {
-   
+    this.dadesAlumne = new FormGroup({
+      nom: new FormControl(this.alumneFill.nom), //, Validators.minLength(2)
+      cognom1: new FormControl(this.alumneFill.cognom1),
+      cognom2: new FormControl(this.alumneFill.cognom2),
+      dataNaixement: new FormControl(this.alumneFill.dataNaixement),
+      seguretatSoc: new FormControl(this.alumneFill.seguretatSoc),
+      adresa: new FormControl(this.alumneFill.adresa),
+      telefon1: new FormControl(this.alumneFill.telefon1),
+      telefon2: new FormControl(this.alumneFill.telefon2),
+      email: new FormControl(this.alumneFill.email),
+      nivell: new FormControl(this.alumneFill.nivell),
+      classe: new FormControl(this.alumneFill.classe),
+      repetidor: new FormControl(this.alumneFill.repetidor),
+      cursRepetit: new FormControl(this.alumneFill.cursRepetit),
+      atencioDiversitat: new FormControl(this.alumneFill.atencioDiversitat),
+      serveisExternsSeguiment: new FormControl(this.alumneFill.serveisExternsSeguiment),
+      fullDerivacio: new FormControl(this.alumneFill.fullDerivacio),
+      fullDerivacioAutor: new FormControl(this.alumneFill.fullDerivacioAutor),
+      fullDerivacioMotiu: new FormControl(this.alumneFill.fullDerivacioMotiu),
+      beca: new FormControl(this.alumneFill.beca),
+      valoracioEap: new FormControl(this.alumneFill.valoracioEap),
+      valoracioEapAny: new FormControl(this.alumneFill.valoracioEapAny),
+      dictamen: new FormControl(this.alumneFill.dictamen),
+      motiuDictamen: new FormControl(this.alumneFill.motiuDictamen),
+      adequacioContingutsMates: new FormControl(this.alumneFill.adequacioContingutsMates),
+      adequacioContingutsCatala: new FormControl(this.alumneFill.adequacioContingutsCatala),
+      adequacioContingutsCastella: new FormControl(this.alumneFill.adequacioContingutsCastella),
+      adequacioContingutsMedi: new FormControl(this.alumneFill.adequacioContingutsMedi),
+      piCatala: new FormControl(this.alumneFill.piCatala),
+      piMates: new FormControl(this.alumneFill.piMates),
+      piCastellano: new FormControl(this.alumneFill.piCastellano),
+      piMedi: new FormControl(this.alumneFill.piMedi),
+      piEducacioFisica: new FormControl(this.alumneFill.piEducacioFisica),
+      piEducacioArtistica: new FormControl(this.alumneFill.piEducacioArtistica),
+      seguimentEap: new FormControl(this.alumneFill.seguimentEap),
+      seguimentTsEap: new FormControl(this.alumneFill.seguimentTsEap),
+      seguimentCredag: new FormControl(this.alumneFill.seguimentCredag),
+      seguimentCredv: new FormControl(this.alumneFill.seguimentCredv),
+      seguimentCsmij: new FormControl(this.alumneFill.seguimentCsmij),
+      seguimentSeetdic: new FormControl(this.alumneFill.seguimentSeetdic),
+      seguimentCdiap: new FormControl(this.alumneFill.seguimentCdiap),
+      seguimentPediatria: new FormControl(this.alumneFill.seguimentPediatria),
+      seguimentNeuropediatria: new FormControl(this.alumneFill.seguimentNeuropediatria),
+      seguimentAltresEspecialitats: new FormControl(this.alumneFill.seguimentAltresEspecialitats),
+      atencioServeisPrivats: new FormControl(this.alumneFill.atencioServeisPrivats),
+
+    });
+    this.dadesAlumne.get('cursRepetit').disable();
   }
 
   get imatgeURL() {
-    if (!this.dadesAlumne.value.img) {
+    if (!this.alumneFill.img) {
         return `${cloud_url}v1617550969/no-imatge_nwdrzz.jpg`;
     } else {
-        return this.dadesAlumne.value.img;
+        return `${cloud_url}v1617550969/${this.alumneFill.img}`;
     }
-}
+  }
   get validacioNom () {
     return this.dadesAlumne.get('nom').invalid && this.dadesAlumne.get('nom').touched
   }
@@ -70,76 +115,82 @@ export class ModalDadesAlumneComponent implements OnInit {
   get validacioEmail () {
     return this.dadesAlumne.get('email').invalid
   }
+  get uid(): string {
+    return this.alumneFill.uid || '';
+  }
+  get divDiversitat() {
+    let divDiv = this.dadesAlumne.value.atencioDiversitat;
+    return divDiv
+  }
+  get divServeisExterns() {
+    return this.dadesAlumne.get('serveisExternsSeguiment').value
+  }
+  get divFullDerivacio() {
+    let divDiv = this.dadesAlumne.value.fullDerivacio;
+    return divDiv
+  }
+  get divValoracioEAP() {
+    return this.dadesAlumne.get('valoracioEap').value
+  }
+  get divDictamen() {
+    return this.dadesAlumne.get('dictamen').value
+  }
 
   obrirModalDades(content) {
-    console.log('Hola');
-    this.modalService.open(content, {ariaLabelledBy: 'modal-dades-alumne'}).result.then((res) => {
-      this.closeModal = `Closed with: ${res}`;
-      console.log(this.closeModal);
+    // Corregir scrollable
+    this.modalService.open(content, {scrollable: true, ariaLabelledBy: 'modal-dades-alumne', size: 'lg'}).result.then((res) => {
+      // Al tancar amb DESA...
+      this.pujarAlumne();
     }, (res) => {
-      this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
-      console.log(this.closeModal);
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
+      // Al tancar sense DESA...
     }
+    );
   }
 
-  creaFormulari() {
-    this.dadesAlumne = this.fb.group({
-      nom: new FormControl('', [Validators.required, Validators.minLength(2)]),
-      cognom1: new FormControl('', [Validators.required, Validators.minLength(2)]),
-      cognom2: new FormControl(''),
-      dataNaixement: new FormControl('dd/mm/aaaa'),
-      seguretatSoc: new FormControl(''),
-      adresa: new FormControl(''),
-      telefon1: new FormControl(''),
-      telefon2: new FormControl(''),
-      email: new FormControl('', Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')),
-      nivell: new FormControl(this.nivell, Validators.required),
-      classe: new FormControl(this.classe, Validators.required),
-      repetidor: new FormControl(this.repetidor),
-      cursRepetit: new FormControl(''),
-      img: new FormControl('')
-      // Para arrays
-      // this.fb.array([]) - Clase 205 Angular Legacy
-    });
-  }
-
-  creaAlumne() {
+  async pujarAlumne() {
     if (this.dadesAlumne.invalid) {
       return;
-    } else {
-      this.imgTemp = null;
-      this.dadesAlumne.value.dataNaixement = this.dataNa;
-      this.dadesAlumne.value.img = this.imatge;
-      this.alumneService.crearAlumne(this.dadesAlumne.value)
-      .subscribe(res => { 
-            // console.log('RESPUESTA SERVICE', res);
-            this.pujarImatge(res);
-            this.creaFormulari();
-          }, (err) => {
-            Swal.fire({
-              title: 'Error',
-              text: err.error.msg,
-              icon: 'error',
-              showClass: {
-                popup: 'animate__animated animate__fadeIn'
-              },
-              hideClass: {
-                popup: 'animate__animated animate__fadeOut'
-              }
-            });
+    }
+    this.dadesAlumne.value.uid = this.uid;
+    const dades = this.dadesAlumne.value;
+    console.log('DADES alumne uid:', dades.uid);
+    await this.carregaImatgeService
+          .actualitzaImatge(this.imatgePerPujar, 'alumnes', dades.uid)
+          .then(img => {
+            this.imatge = img;
+            console.log('IMATGE PUJADA:',img);
+            console.log('UID:',dades.uid);
+            // this.actualitzaAlumne();
+          }).catch(err => {
+            Swal.fire('Error', "No s'ha pogut actualitzar la imatge", 'success');
           });
+    // await this.pujarImatge(dades);
+    await this.actualitzaAlumne();
+    await this.alumneService.nouAlumne.emit(this.imatge);
+  }
+
+  actualitzaAlumne() {
+    this.dadesAlumne.value.dataNaixement = this.dataNa;
+    this.dadesAlumne.value.uid = this.uid;
+    this.alumneService.actualitzarAlumne(this.dadesAlumne.value)
+    .subscribe(res => { 
+      console.log('RESPUESTA SERVICE dades:', res);
+      // this.pujarImatge(res);
+      // this.creaFormulari();
+    }, (err) => {
+      Swal.fire({
+        title: 'Error',
+        text: err.error.msg,
+        icon: 'error',
+        showClass: {
+          popup: 'animate__animated animate__fadeIn'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOut'
         }
-        
+      });
+      console.log(err);
+    });
   }
 
   datepicker(data) {
@@ -160,33 +211,16 @@ export class ModalDadesAlumneComponent implements OnInit {
 
   canviarImatge(file: File) {
     this.imatgePerPujar = file;
+
     if (!file) {
       return this.imgTemp = null;
     }
-
+  
     const reader = new FileReader();
-
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       this.imgTemp = reader.result;
     };
   }
-
-  pujarImatge(dades) {
-    this.carregaImatgeService
-        .actualitzaImatge(this.imatgePerPujar, 'alumnes', dades.alumne._id)
-        .then(img => {
-          console.log(img);
-          this.imatge = img;
-          this.alumneService.nouAlumne.emit(this.imatge);
-        }).catch(err => {
-          Swal.fire('Error', "No s'ha pogut actualitzar la imatge", 'success');
-        });
-  }
-
-  tancarModal() {
-    this.alumneService.tancarModal();
-  }
-
 
 }

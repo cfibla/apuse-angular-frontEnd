@@ -31,7 +31,7 @@ export class AlumnesSuperComponent implements OnInit {
       delay(100)
     )
     .subscribe(alumne => {
-      
+      console.log('PIPE:', alumne);
       this.carregarAlumnes();
     });
   }
