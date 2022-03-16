@@ -82,7 +82,16 @@
                                     <option value="6è">6è</option>
                                 </select>
                             </div>
+                            <div class="col-10 m-b-20 p-t-50">
+                                <div class="form-check">
+                                    <div class="checkbox checkbox-success">
+                                        <input id="chk-ee" type="checkbox" class="filled-in chk-col-light-blue" formControlName="atencioDiversitat">
+                                        <label for="chk-ee" [ngClass]="{'bold' : divFullDerivacio}"> Seguiment atenció a la diversitat </label>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- Seguiment Atenció a la diversitat -->
+                            <!--                             
                             <div class="row col-12 m-b-20" [ngClass]="{'div-diversitat' : divDiversitat}">
                                 <label class="col-form-label" [ngClass]="{'bold' : divDiversitat}">Seguiment Atenció a la diversitat</label>
                                 <select class="form-control" formControlName="atencioDiversitat">
@@ -196,24 +205,24 @@
                                     <div class="col-3">
                                         <div class="form-check">
                                             <div class="checkbox checkbox-success">
-                                                <input id="piCat" type="checkbox" class="filled-in chk-col-light-blue" formControlName="piCatala">
-                                                <label for="piCat"> Curricular </label>
+                                                <input id="piCurr" type="checkbox" class="filled-in chk-col-light-blue" formControlName="piCurricular">
+                                                <label for="piCurr"> Curricular </label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-check">
                                             <div class="checkbox checkbox-success">
-                                                <input id="piCat" type="checkbox" class="filled-in chk-col-light-blue" formControlName="piCatala">
-                                                <label for="piCat"> Metodològic </label>
+                                                <input id="piMet" type="checkbox" class="filled-in chk-col-light-blue" formControlName="piMetodologic">
+                                                <label for="piMet"> Metodològic </label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-check">
                                             <div class="checkbox checkbox-success">
-                                                <input id="piCat" type="checkbox" class="filled-in chk-col-light-blue" formControlName="piCatala">
-                                                <label for="piCat"> Conductual </label>
+                                                <input id="piCond" type="checkbox" class="filled-in chk-col-light-blue" formControlName="piConductual">
+                                                <label for="piCond"> Conductual </label>
                                             </div>
                                         </div>
                                     </div>
@@ -259,23 +268,24 @@
                                     <div class="col-3">
                                         <div class="form-check">
                                             <div class="checkbox checkbox-success">
-                                                <input id="piCast" type="checkbox" class="filled-in chk-col-light-blue" formControlName="piEducacioFisica">
-                                                <label for="piCast"> Ed. Física </label>
+                                                <input id="piEd" type="checkbox" class="filled-in chk-col-light-blue" formControlName="piEducacioFisica">
+                                                <label for="piEd"> Ed. Física </label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-check">
                                             <div class="checkbox checkbox-success">
-                                                <input id="piMed" type="checkbox" class="filled-in chk-col-light-blue" formControlName="piEducacioArtistica">
-                                                <label for="piMed"> Ed. Artística </label>
+                                                <input id="piEa" type="checkbox" class="filled-in chk-col-light-blue" formControlName="piEducacioArtistica">
+                                                <label for="piEa"> Ed. Artística </label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- Seguiment serveis externs -->
+                            <!--                             
                             <div class="row col-12 m-b-20" [ngClass]="{'div-diversitat' : divServeisExterns}">
                                 <label class="col-form-label" [ngClass]="{'bold' : divServeisExterns}">Seguiment Serveis Externs</label>
                                 <select class="form-control" formControlName="serveisExternsSeguiment">
@@ -371,7 +381,7 @@
                                         <input id="atencioServPri" type="text" class="form-control" formControlName="atencioServeisPrivats">
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

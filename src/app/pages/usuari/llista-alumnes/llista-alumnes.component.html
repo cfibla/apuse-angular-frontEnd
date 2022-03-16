@@ -1,0 +1,101 @@
+<div class="row animated fadeIn slow">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="text" class="form-control" placeholder="Cerca alumne..." #txtCerca (keyup)="cercar(txtCerca.value)" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn slow" *ngIf="carregant">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Carregant la pàgina</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Un moment, si us plau</p>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn slow" *ngIf="!carregant">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-4">
+                        <h4 class="card-title">Alumnes</h4>
+                        <h6 class="card-subtitle">Total d'alumnes: {{alumnes.length}}</h6>
+                    </div>
+                    <div class="col-8 text-right">
+                        <app-modal-nou-alumne></app-modal-nou-alumne>
+                    </div>
+                </div>
+
+                <table class="table-bordered table m-b-0 toggle-arrow-tiny footable-loaded footable tablet breakpoint">
+                    <thead>
+                        <tr>
+                            <th class="w50"></th>
+                            <th class="w100"></th>
+                            <th class="text-center">Nom</th>
+                            <th class="text-center w100">Curs</th>
+                            <th class="text-center w100">Centre</th>
+                            <th class="text-center w100">Dades</th>
+                            <th class="text-center w100">EE</th>
+                            <th class="text-center w100">Tutories</th>
+                            <th class="text-center w100">Assistència</th>
+                            <th class="text-center text-nowrap w100">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let alumne of alumnes; let i = index">
+                            <td class="text-center taulaAlign">{{i + 1}}</td>
+                            <td class="text-center taulaAlign">
+                                <img [src]="alumne.imatgeURL" class="avatar-petit" alt="Imatge d'alumne">
+                            </td>
+                            <td class="text-center taulaAlign">{{alumne.nom}} {{alumne.cognom1}} {{alumne.cognom2}}</td>
+                            <td class="text-center taulaAlign">{{alumne.nivell}} {{alumne.classe}}</td>
+                            <td class="text-center taulaAlign">{{alumne.centre.nom}}</td>
+                            <td class="text-center taulaAlign">
+                                <app-modal-dades-alumne [alumneFill]="alumne"></app-modal-dades-alumne>
+                            </td>
+                            <td class="text-center taulaAlign">
+                                <app-modal-ee-alumne [alumneFill]="alumne"></app-modal-ee-alumne>
+                            </td>
+                            <td class="text-center taulaAlign">
+                                <app-modal-tutories-alumne></app-modal-tutories-alumne>
+                            </td>
+                            <td class="text-center taulaAlign">
+                                <app-modal-tutories-alumne></app-modal-tutories-alumne>
+                            </td>
+                            <td class="text-nowrap text-center taulaAlign">
+                                <a (click)="esborrarAlumne(alumne)" data-toggle="tooltip" data-original-title="Eliminar" class="cursor linksAlumne">
+                                    <i class="fa fa-close text-danger"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <!-- <td colspan="2">
+                                <button type="button" class="btn btn-info btn-rounded"><i class="fa fa-plus"> </i> Afegir alumnes</button>
+                            </td> -->
+                            <td colspan="9">
+                                <div class="text-right">
+                                    <ul class="pagination">
+                                        <li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li>
+                                        <li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li>
+                                        <li class="footable-page active"><a data-page="0" href="#">1</a></li>
+                                        <li class="footable-page"><a data-page="1" href="#">2</a></li>
+                                        <li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li>
+                                        <li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

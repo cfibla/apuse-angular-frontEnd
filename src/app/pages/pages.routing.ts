@@ -22,6 +22,8 @@ import { CentresSuperComponent } from './super/centres/centres.component';
 import { AlumnesSuperComponent } from './super/alumnes/alumnes.component';
 import { AdminGuard } from '../guards/admin.guard';
 import { SuperGuard } from '../guards/super.guard';
+import { LlistaAlumnesComponent } from './usuari/llista-alumnes/llista-alumnes.component';
+import { LlistaAssistenciaComponent } from './usuari/llista-assistencia/llista-assistencia.component';
 
 const routes: Routes = [
 
@@ -43,6 +45,9 @@ const routes: Routes = [
         { path: 'super/mestres', canActivate: [SuperGuard], component: MestresSuperComponent, data: {titulo: 'Super - Administració mestres'} },
         { path: 'super/alumnes', canActivate: [SuperGuard], component: AlumnesSuperComponent, data: {titulo: 'Super - Administració alumnes'} },
         { path: 'super/centres', canActivate: [SuperGuard], component: CentresSuperComponent, data: {titulo: 'Super - Administració centres'} },
+        // Usuari
+        { path: 'user/alumnes', component: LlistaAlumnesComponent, data: {titulo: 'Dades alumnes'} },
+        { path: 'user/assistencia', component: LlistaAssistenciaComponent, data: {titulo: 'Assistència'} },
       ]
     }
 

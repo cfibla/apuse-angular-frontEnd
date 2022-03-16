@@ -21,6 +21,8 @@ import { AlumnesComponent } from './administrador/alumnes/alumnes.component';
 import { MestresSuperComponent } from './super/mestres/mestres.component';
 import { AlumnesSuperComponent } from './super/alumnes/alumnes.component';
 import { CentresSuperComponent } from './super/centres/centres.component';
+import { LlistaAlumnesComponent } from './usuari/llista-alumnes/llista-alumnes.component';
+import { LlistaAssistenciaComponent } from './usuari/llista-assistencia/llista-assistencia.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { CentresSuperComponent } from './super/centres/centres.component';
     AlumnesComponent,
     MestresSuperComponent,
     AlumnesSuperComponent,
-    CentresSuperComponent
+    CentresSuperComponent,
+    LlistaAlumnesComponent,
+    LlistaAssistenciaComponent
   ],
   exports: [
     DashboardComponent,

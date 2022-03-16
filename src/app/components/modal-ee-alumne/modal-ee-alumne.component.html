@@ -1,19 +1,326 @@
-<a class="linksAlumne" (click)="obrirEeModal(modalEeAlumne)"><i class="fa fa-plus-circle text-success"></i></a>
-<ng-template #modalEeAlumne let-modal let-c="close">
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-dades-alumne">Atenció a la diversitat</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">×</span>
+<a class="linksAlumne" (click)="obrirEeModal(modalEeAlumne)" *ngIf="divDiversitat===true"><i class="fa fa-plus-circle text-success"></i></a>
+<a *ngIf=" divDiversitat!==true "><i class="fa fa-plus-circle text-muted "></i></a>
+<ng-template #modalEeAlumne let-modal let-c="close ">
+    <div class="modal-header ">
+        <h4 class="modal-title " id="modal-ee-alumne ">Atenció a la diversitat</h4>
+        <button type="button " class="close " aria-label="Close " (click)="modal.dismiss( 'Cross click') ">
+      <span aria-hidden="true ">×</span>
     </button>
     </div>
-    <div class="modal-body">
-        <p><strong>Are you sure you want to delete <span class="text-primary">"Agatha Harkness"</span> profile?</strong></p>
+    <div class="modal-body ">
+        <div class="row ">
+            <div class="col-3 m-b-20 div-diversitat ">
+                <img *ngIf="!imgTemp " [src]="imatgeURL " class="img-avatar ">
+                <img *ngIf="imgTemp " [src]="imgTemp " class="img-avatar ">
+            </div>
+            <div class="col-6 m-t-40 ">
+                <div class="row ">
+                    <div class="col-12 m-b-20 ">{{dadesAlumne.value.nom}} {{dadesAlumne.value.cognom1}} {{dadesAlumne.value.cognom2}}</div>
+                    <div class="col-4 m-b-20 ">{{dadesAlumne.value.nivell}} {{dadesAlumne.value.classe}}</div>
+                </div>
+            </div>
+        </div>
+        <form [formGroup]="dadesAlumne " class="form-horizontal form-material " autocomplete="off ">
+            <div class="form-group div-diversitat ">
+                <div class="row ">
+                    <div class="col-12 m-b-20 ">
+                        <label class="col-form-label " [ngClass]="{ 'bold' : divDiversitat} ">Seguiment Atenció a la diversitat</label>
+                        <select class="form-control " formControlName="atencioDiversitat ">
+                            <option [ngValue]='false'>No</option>
+                            <option [ngValue]='true'>Si</option>
+                        </select>
+                    </div>
+                    <div class="row col-12 m-b-20 p-t-20 ">
+                        <div class="col-4 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="chk-1 " type="checkbox " class="filled-in chk-col-light-blue " formControlName="fullDerivacio ">
+                                    <label for="chk-1 " [ngClass]="{ 'bold' : divFullDerivacio} "> Full de derivació </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-12 m-b-20 " *ngIf="divFullDerivacio===true ">
+                            <div class="col-6 ">
+                                <label for="derivAutor "> Qui demana la derivació? </label>
+                                <input type="text " id="derivAutor " class="form-control " formControlName="fullDerivacioAutor " placeholder="Nom ">
+                            </div>
+                            <div class="col-6 ">
+                                <label for="derivMotiu "> Motiu de la derivació? </label>
+                                <input type="text " id="derivMotiu " class="form-control " formControlName="fullDerivacioMotiu " placeholder="Motiu ">
+                            </div>
+                        </div>
 
-        <p>All data related to west view profile will be removed permanently.
-        </p>
+                        <div class="col-4 m-b-20 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="vEAP " type="checkbox " class="filled-in chk-col-light-blue " formControlName="valoracioEap ">
+                                    <label for="vEAP " [ngClass]="{ 'bold' : divValoracioEAP} "> Valoració EAP </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-12 " *ngIf="divValoracioEAP===true ">
+                            <div class="col-6 m-b-20 ">
+                                <label for="anyVal "> Any de valoració </label>
+                                <input type="text " id="anyVal " class="form-control " formControlName="valoracioEapAny " placeholder="Any ">
+                            </div>
+                        </div>
+
+                        <div class="col-4 m-b-20 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="dictamen " type="checkbox " class="filled-in chk-col-light-blue " formControlName="dictamen ">
+                                    <label for="dictamen " [ngClass]="{ 'bold' : divDictamen} "> Dictamen </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-12 " *ngIf="divDictamen===true ">
+                            <div class="col-6 m-b-20 ">
+                                <label for="motiuDic "> Motiu dictamen </label>
+                                <input type="text " id="motiuDic " class="form-control " formControlName="motiuDictamen " placeholder="Motiu ">
+                            </div>
+                        </div>
+                        <div class="col-sm-4 m-b-20 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="beca " type="checkbox " formControlName="beca " class="filled-in chk-col-light-blue ">
+                                    <label for="beca "> Beca </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <label class="bold "> Adequació de continguts </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 m-b-20 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="acCat " type="checkbox " class="filled-in chk-col-light-blue " formControlName="adequacioContingutsCatala ">
+                                    <label for="acCat "> Català </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 m-b-20 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="acMates " type="checkbox " class="filled-in chk-col-light-blue " formControlName="adequacioContingutsMates ">
+                                    <label for="acMates "> Matemàtiques </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 m-b-20 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="acCast " type="checkbox " class="filled-in chk-col-light-blue " formControlName="adequacioContingutsCastella ">
+                                    <label for="acCast "> Castellà </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 m-b-20 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="acMedi " type="checkbox " class="filled-in chk-col-light-blue " formControlName="adequacioContingutsMedi ">
+                                    <label for="acMedi "> Medi </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <label class="bold "> Pla individualitzat </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="piCurr " type="checkbox " class="filled-in chk-col-light-blue " formControlName="piCurricular ">
+                                    <label for="piCurr "> Curricular </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="piMet " type="checkbox " class="filled-in chk-col-light-blue " formControlName="piMetodologic ">
+                                    <label for="piMet "> Metodològic </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="piCond " type="checkbox " class="filled-in chk-col-light-blue " formControlName="piConductual ">
+                                    <label for="piCond "> Conductual </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <small class="bold "> Àrees amb P.I. </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="piCat " type="checkbox " class="filled-in chk-col-light-blue " formControlName="piCatala ">
+                                    <label for="piCat "> Català </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="piMat " type="checkbox " class="filled-in chk-col-light-blue " formControlName="piMates ">
+                                    <label for="piMat "> Matemàtiques </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="piCast " type="checkbox " class="filled-in chk-col-light-blue " formControlName="piCastellano ">
+                                    <label for="piCast "> Castellà </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="piMed " type="checkbox " class="filled-in chk-col-light-blue " formControlName="piMedi ">
+                                    <label for="piMed "> Medi </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="piEd " type="checkbox " class="filled-in chk-col-light-blue " formControlName="piEducacioFisica ">
+                                    <label for="piEd "> Ed. Física </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="piEa " type="checkbox " class="filled-in chk-col-light-blue " formControlName="piEducacioArtistica ">
+                                    <label for="piEa "> Ed. Artística </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seguiment serveis externs -->
+                <div class="row ">
+                    <div class="col-12 m-b-20 ">
+                        <label class="col-form-label " [ngClass]="{ 'bold' : divServeisExterns} ">Seguiment Serveis Externs</label>
+                        <select class="form-control " formControlName="serveisExternsSeguiment ">
+                            <option [ngValue]=false>No</option>
+                            <option [ngValue]=true>Si</option>
+                        </select>
+                    </div>
+                    <div class="row col-12 m-b-20 p-t-20 " *ngIf="divServeisExterns===true ">
+                        <div class="col-6 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="segEap " type="checkbox " class="filled-in chk-col-light-blue " formControlName="seguimentEap ">
+                                    <label for="segEap "> Seguiment per part de l'EAP </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="segTsEap " type="checkbox " class="filled-in chk-col-light-blue " formControlName="seguimentTsEap ">
+                                    <label for="segTsEap "> Seguiment del/la TS de l'EAP </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="segCredag " type="checkbox " class="filled-in chk-col-light-blue " formControlName="seguimentCredag ">
+                                    <label for="segCredag "> Seguiment per part del CREDAG </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="segCredv " type="checkbox " class="filled-in chk-col-light-blue " formControlName="seguimentCredv ">
+                                    <label for="segCredv "> Seguiment per part del CREDV </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="segCsmij " type="checkbox " class="filled-in chk-col-light-blue " formControlName="seguimentCsmij ">
+                                    <label for="segCsmij "> Seguiment per part del CSMIJ </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="segSeetdic " type="checkbox " class="filled-in chk-col-light-blue " formControlName="seguimentSeetdic ">
+                                    <label for="segSeetdic "> Seguiment per part del SEETDIC </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 m-b-20 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="segCediap " type="checkbox " class="filled-in chk-col-light-blue " formControlName="seguimentCdiap ">
+                                    <label for="segCediap "> Seguiment per part del CDIAP </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <label class="bold "> Seguiment mèdic </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 m-b-20 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="segPediatra " type="checkbox " class="filled-in chk-col-light-blue " formControlName="seguimentPediatria ">
+                                    <label for="segPediatra "> Seguiment pediatra </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 m-b-20 ">
+                            <div class="form-check ">
+                                <div class="checkbox checkbox-success ">
+                                    <input id="segNeuroPed " type="checkbox " class="filled-in chk-col-light-blue " formControlName="seguimentNeuropediatria ">
+                                    <label for="segNeuroPed "> Seguiment neuropediatra </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 m-b-20 ">
+                            <label for="segAltresEsp "> Seg. altres especialitats </label>
+                            <input id="segAltresEsp " type="text " class="form-control " formControlName="seguimentAltresEspecialitats ">
+                        </div>
+                        <div class="col-6 m-b-20 ">
+                            <label for="atencioServPri "> Atenció serveis privats </label>
+                            <input id="atencioServPri " type="text " class="form-control " formControlName="atencioServeisPrivats ">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="modal.dismiss('Close click')">Close</button>
-        <button type="button" class="btn btn-info" (click)="modal.close('Save click')">Desa</button>
+    <div class="modal-footer ">
+        <button type="button " class="btn btn-danger " (click)="modal.dismiss( 'Close click') ">Close</button>
+        <button type="button " class="btn btn-info " (click)="modal.close( 'Save click') ">Desa</button>
     </div>
 </ng-template>

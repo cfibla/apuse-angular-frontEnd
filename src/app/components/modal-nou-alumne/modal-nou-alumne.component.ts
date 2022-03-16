@@ -46,6 +46,7 @@ export class ModalNouAlumneComponent implements OnInit {
                 this.classe = this.usuari.classe;
                 this.nivell = this.usuari.nivell;
                 this.creaFormulari();
+                // this.noAdminNoSuper();
                 this.dadesAlumnes.get('cursRepetit').disable();
                }
 
@@ -69,6 +70,13 @@ export class ModalNouAlumneComponent implements OnInit {
   get validacioEmail () {
     return this.dadesAlumnes.get('email').invalid
   }
+  // get noAdminNoSuper () {
+  //   if(this.usuari.role==='USER_ROLE') {
+  //     return true
+  //   } else {
+  //     return false
+  //   }
+  // }
 
   creaFormulari() {
     this.dadesAlumnes = this.fb.group({
@@ -89,6 +97,13 @@ export class ModalNouAlumneComponent implements OnInit {
       // Para arrays
       // this.fb.array([]) - Clase 205 Angular Legacy
     });
+  }
+
+  noAdminNoSuper () {
+    if(this.usuari.role==='USER_ROLE') {
+      this.dadesAlumnes.get('nivell').disable();
+      this.dadesAlumnes.get('classe').disable();
+    } 
   }
 
   datepicker(data) {
